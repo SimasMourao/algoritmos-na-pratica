@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "name": "C Debug",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/algoritmos/ordenacao/c/combSort.exe",
+            "cwd": "${workspaceFolder}/algoritmos/ordenacao/c/",
+            "console": "integratedTerminal"
+        }
+    ]
+}

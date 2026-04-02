@@ -3,7 +3,7 @@ def busca_binaria (vetor, item):
     alto = len(vetor) -1;
 
     while baixo <= item:
-        meio = (baixo + alto) / 2;
+        meio = (baixo + alto) // 2;
         chute = vetor[meio];
             
         if chute == item:

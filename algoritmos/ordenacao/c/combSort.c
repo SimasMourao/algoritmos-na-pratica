@@ -1,67 +1,110 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <unistd.h> // usleep
-void drawBars(int arr[], int size, int i, int j) {
+#include <windows.h>
+// #include <unistd.h> // linux
+#define TAM 20
+
+void drawBars(int arr[], int size, int i, int j)
+{
     int k, h;
-    //system("cls"); // use "cls" no Windows
-    //system("clear") // linux
-    system("\033[H\033[J"); // GDB
+
+    system("cls"); // use "cls" no Windows
+    //system("clear"); // linux
+
     printf("Comb Sort - Visualizacao\n\n");
-    for (k = 0; k < size; k++) {
+
+    for (k = 0; k < size; k++)
+    {
         printf("%2d: ", arr[k]);
-        for (h = 0; h < arr[k]; h++) {
-            if (k == i || k == j) printf("#"); // destaque
-            else printf("|");
+
+        for (h = 0; h < arr[k]; h++)
+        {
+            if (k == i || k == j)
+                printf("#"); // destaque
+
+            else
+                printf("|");
         }
+
         printf("\n");
     }
 }
-void combSort(int arr[], int size) {
+
+void combSort(int arr[], int size)
+{
     int gap = size;
     int trocou = 1;
     int i, j;
-    while (gap > 1 || trocou) {
+
+    while (gap > 1 || trocou)
+    {
         gap = (gap * 10) / 13;
         if (gap < 1)
             gap = 1;
+
         trocou = 0;
-        for (i = 0; i < size - gap; i++) {
+
+        for (i = 0; i < size - gap; i++)
+        {
             j = i + gap;
+
             drawBars(arr, size, i, j);
-            usleep(150000);
-            if (arr[i] > arr[j]) {
+            Sleep(150);
+            //usleep(150000) linux/unix
+
+            if (arr[i] > arr[j])
+            {
                 int temp = arr[i];
                 arr[i] = arr[j];
                 arr[j] = temp;
                 trocou = 1;
+
                 drawBars(arr, size, i, j);
-                usleep(300000);
+                Sleep(150);
+                //usleep(150000) linux/unix
             }
         }
     }
 }
-int exist(int arr[], int index, int num){
-    for(int i = 0; i < index; i++){
-        if(arr[i] == num){
-            return 1;
-        }
+
+void shuffle(int arr[], int n)
+{
+    for (int i = n - 1; i > 0; i--)
+    {
+        int j = rand() % (i + 1);
+
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
-    return 0;
 }
-int main() {
-    srand(time(NULL));
-    int tam = rand()%20 + 5;
-    int arr[tam];
-    int num;
-    for(int i = 0; i < tam; i++){
-        do{
-            num = rand()%30 + 1;
-        }
-        while(exist(arr, i, num));
-            arr[i] = num;
+
+void buildVetor(int arr[], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        arr[i] = i + 1;
     }
-    combSort(arr, tam);
+}
+
+int main()
+{
+    srand(time(NULL));
+
+    int arr[TAM];
+    int num;
+
+    // criar vetor
+    buildVetor(arr, TAM);
+    
+    // embaralhar vetor
+    shuffle(arr, TAM);
+
+    // ordenar vetor
+    combSort(arr, TAM);
+
     printf("\nOrdenado!\n");
+
     return 0;
 }
